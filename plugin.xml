@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-outsystems-secure-sqlite-bundle"
+    version="0.1.6">
+
+    <name>Cordova OutSystems secure SQLite bundle</name>
+
+    <license>MIT</license>
+
+    <keywords>sqlcipher</keywords>
+
+    <description>Bundle of SQLite plugins and initialization code for easy use with the OutSystems Platform</description>
+
+    <author>OutSystems</author>
+
+    <!--<hook type="before_plugin_install" src="scripts/beforePluginInstall.js" />-->
+
+    <js-module src="www/outsystems-secure-sqlite-init.js" name="OutSystemsSecureSQLiteBundle">
+        <clobbers target="OutSystemsSecureSQLiteBundle" />
+    </js-module>
+
+    <dependency id="cordova-sqlcipher-adapter" />
+
+</plugin>
+
+<!-- vim: set expandtab : -->
