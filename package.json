@@ -28,7 +28,7 @@
       "version": ">=3.3.0"
     }
   ],
-  "author": "various",
+  "author": "OutSystems",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/issues"
