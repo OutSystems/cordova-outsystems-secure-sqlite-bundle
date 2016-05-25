@@ -21,6 +21,7 @@
     </js-module>
 
     <dependency id="cordova-sqlcipher-adapter" />
+    <dependency id="cordova-plugin-secure-storage" />
 
 </plugin>
 
