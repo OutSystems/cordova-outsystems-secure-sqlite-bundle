@@ -14,7 +14,7 @@
 
     <author>OutSystems</author>
 
-    <!--<hook type="before_plugin_install" src="scripts/beforePluginInstall.js" />-->
+    <hook type="before_plugin_install" src="scripts/clearIncompatiblePlugins.js" />
 
     <js-module src="www/outsystems-secure-sqlite-init.js" name="OutSystemsSecureSQLiteBundle">
         <clobbers target="OutSystemsSecureSQLiteBundle" />
