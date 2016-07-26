@@ -23,3 +23,7 @@ window.sqlitePlugin.openDatabase(options, successCallback, errorCallback);
 ```
 
 Refer to the Cordova SQLCipher Adapter plugin documentation for samples and details of the supported features.
+
+## Known Limitations
+- Will fail to open existing databases that are not encrypted
+  - *Workaround*: either delete it prior to calling `openDatabase` or use a different database name.
