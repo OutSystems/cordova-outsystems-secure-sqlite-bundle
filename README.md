@@ -25,9 +25,10 @@ window.sqlitePlugin.openDatabase(options, successCallback, errorCallback);
 
 Refer to the Cordova SQLCipher Adapter plugin documentation for samples and details of the supported features.
 
-## Known Limitations
-- Will fail to open existing databases that are not encrypted
-  - *Workaround*: either delete it prior to calling `openDatabase` or use a different database name.
+## Known Issues
+- The usage of the SecureStorage plugin requires **Android devices** to have a PIN (or similar) set. Removal of the PIN will effectively **render the database unreadable**, as the key will be lost.
+- It is not possible to open existing databases that are not encrypted.
+  - *Workaround*: either delete them prior to calling `openDatabase` or use a different database name.
 
 ---
 
