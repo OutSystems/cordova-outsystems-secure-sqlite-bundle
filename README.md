@@ -4,7 +4,6 @@ Cordova meta-plugin that bundles requirements for secure SQLite device storage a
 ## Supported Platforms
 - iOS
 - Android
-- Windows
 
 ## Installation
 ```shell
