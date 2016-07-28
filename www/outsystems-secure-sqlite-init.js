@@ -79,6 +79,7 @@ var originalOpenDatabase = window.sqlitePlugin.openDatabase;
 window.sqlitePlugin.openDatabase = function(options, successCallback, errorCallback) {
 	return acquireLsk(
 		function (key) {
+			// Clone the options and set the `key`
 			var newOptions = {};
 			for (var prop in options) { 
 				if (options.hasOwnProperty(prop)) {
@@ -86,6 +87,11 @@ window.sqlitePlugin.openDatabase = function(options, successCallback, errorCallb
 				}
 			}
 			newOptions["key"] = key;
+			
+			// Ensure `location` is set (it is mandatory now)
+			if (!newOptions.location) {
+				newOptions.location = "default";
+			}
 			
 			return originalOpenDatabase.call(window.sqlitePlugin, newOptions, successCallback, errorCallback);
 		},
