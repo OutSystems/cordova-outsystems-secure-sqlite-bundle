@@ -1,9 +1,9 @@
 {
-  "name": "cordova-outsystems-secure-sqlite-bundle",
+  "name": "com.outsystems.plugins.SecureSQLiteBundle",
   "version": "1.0.0",
   "description": "Bundle of SQLite related storage plugins and initialization code for easy use with the OutSystems Platform",
   "cordova": {
-    "id": "cordova-outsystems-secure-sqlite-bundle",
+    "id": "com.outsystems.plugins.SecureSQLiteBundle",
     "platforms": [
       "android",
       "ios",
