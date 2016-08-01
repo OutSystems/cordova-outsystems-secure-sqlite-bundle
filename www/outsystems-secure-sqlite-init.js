@@ -74,6 +74,9 @@ function generateKey() {
             }).join("");
 }
 
+// Set the `isSQLCipherPlugin` feature flag to help ensure the right plugin was loaded
+window.sqlitePlugin.sqliteFeatures["isSQLCipherPlugin"] = true;
+
 // Override existing openDatabase to automatically provide the `key` option
 var originalOpenDatabase = window.sqlitePlugin.openDatabase;
 window.sqlitePlugin.openDatabase = function(options, successCallback, errorCallback) {
@@ -96,4 +99,4 @@ window.sqlitePlugin.openDatabase = function(options, successCallback, errorCallb
 			return originalOpenDatabase.call(window.sqlitePlugin, newOptions, successCallback, errorCallback);
 		},
 		errorCallback);
-}
+};
