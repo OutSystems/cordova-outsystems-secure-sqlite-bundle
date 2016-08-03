@@ -16,8 +16,11 @@ var LOCALSTORAGE_KEY = "outsystems-local-storage-key";
 
 var lskCache = "";
 
-/*
- * Provides the currently stored Local Storage Key or generates a new one
+/**
+ * Provides the currently stored Local Storage Key or generates a new one.
+ * 
+ * @param {Function} successCallback	Called with a successfully acquired LSK.
+ * @param {Function} errorCallback		Called when an error occurs acquiring the LSK.
  */
 function acquireLsk(successCallback, errorCallback) {
 	// If the key is cached, use it
@@ -54,8 +57,10 @@ function acquireLsk(successCallback, errorCallback) {
 		LOCALSTORAGE_KEY);
 }
 
-/*
- * Securely generates a new key
+/**
+ * Securely generates a new key.
+ *
+ * @return {String} The generated key.
  */
 function generateKey() {
 
