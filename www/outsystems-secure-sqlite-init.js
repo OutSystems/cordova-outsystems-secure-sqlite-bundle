@@ -39,13 +39,13 @@ function acquireLsk(successCallback, errorCallback) {
 	ss.get(
 		function (value) {
 			lskCache = value;
-			console.log("got lsk:", lskCache);
+			console.log("Got Local Storage key");
 			successCallback(lskCache);
 		},
 		function (error) {
 			// If there's no key yet, generate a new one and store it
 			lskCache = generateKey();
-			console.log("setting new lsk");
+			console.log("Setting new Local Storage key");
 			ss.set(
 				function (key) {
 					successCallback(lskCache);
