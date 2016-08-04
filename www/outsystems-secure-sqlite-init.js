@@ -31,30 +31,30 @@ function acquireLsk(successCallback, errorCallback) {
     
     // Otherwise, open the OutSystems key store
     var ss = new SecureStorage(
-        function () { /* success */ },
+        function () { 
+			// and when initialized attempt to get the stored key
+			ss.get(
+				function (value) {
+					lskCache = value;
+					console.log("Got Local Storage key");
+					successCallback(lskCache);
+				},
+				function (error) {
+					// If there's no key yet, generate a new one and store it
+					lskCache = generateKey();
+					console.log("Setting new Local Storage key");
+					ss.set(
+						function (key) {
+							successCallback(lskCache);
+						},
+						errorCallback,
+						LOCALSTORAGE_KEY, 
+						lskCache);
+				},
+				LOCALSTORAGE_KEY);
+		},
         errorCallback,
         OUTSYSTEMS_KEYSTORE);
-            
-    // and attempt to get the stored key
-    ss.get(
-        function (value) {
-            lskCache = value;
-            console.log("Got Local Storage key");
-            successCallback(lskCache);
-        },
-        function (error) {
-            // If there's no key yet, generate a new one and store it
-            lskCache = generateKey();
-            console.log("Setting new Local Storage key");
-            ss.set(
-                function (key) {
-                    successCallback(lskCache);
-                },
-                errorCallback,
-                LOCALSTORAGE_KEY, 
-                lskCache);
-        },
-        LOCALSTORAGE_KEY);
 }
 
 /**
