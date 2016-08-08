@@ -4,21 +4,21 @@ var SecureStorage = require('cordova-plugin-secure-storage.SecureStorage');
 
 // Validate SQLite plugin API is properly set
 if (typeof(window.sqlitePlugin) === "undefined") {
-    throw new Error("Dependencies were not loaded correctly: SQLite window API is missing.");
+    throw new Error("Dependencies were not loaded correctly: window.sqlitePlugin is not defined.");
 }
 
 if (typeof(window.sqlitePlugin.openDatabase) !== "function") {
-    throw new Error("Dependencies were not loaded correctly: SQLite window API does not provide an `openDatabase` function.");
+    throw new Error("Dependencies were not loaded correctly: window.sqlitePlugin does not provide an `openDatabase` function.");
 }
 
 var OUTSYSTEMS_KEYSTORE = "outsystems-key-store"
-var LOCALSTORAGE_KEY = "outsystems-local-storage-key";
+var LOCAL_STORAGE_KEY = "outsystems-local-storage-key";
 
 var lskCache = "";
 
 /**
  * Provides the currently stored Local Storage Key or generates a new one.
- * 
+ *
  * @param {Function} successCallback    Called with a successfully acquired LSK.
  * @param {Function} errorCallback      Called when an error occurs acquiring the LSK.
  */
@@ -28,10 +28,10 @@ function acquireLsk(successCallback, errorCallback) {
         successCallback(lskCache);
         return;
     }
-    
+
     // Otherwise, open the OutSystems key store
     var ss = new SecureStorage(
-        function () { 
+        function () {
 			// and when initialized attempt to get the stored key
 			ss.get(
 				function (value) {
@@ -41,17 +41,19 @@ function acquireLsk(successCallback, errorCallback) {
 				},
 				function (error) {
 					// If there's no key yet, generate a new one and store it
-					lskCache = generateKey();
+					var newKey = generateKey();
+					lskCache = undefined;
 					console.log("Setting new Local Storage key");
 					ss.set(
 						function (key) {
+							lskCache = newKey;
 							successCallback(lskCache);
 						},
 						errorCallback,
-						LOCALSTORAGE_KEY, 
-						lskCache);
+						LOCAL_STORAGE_KEY,
+						newKey);
 				},
-				LOCALSTORAGE_KEY);
+				LOCAL_STORAGE_KEY);
 		},
         errorCallback,
         OUTSYSTEMS_KEYSTORE);
@@ -102,12 +104,12 @@ function installNumericParametersWorkaround(db) {
     // overriding its `addTransaction` method to get a SQLiteTransaction object
     var dbPrototype = Object.getPrototypeOf(db);
     var originalAddTransaction = dbPrototype.addTransaction;
-    
+
     dbPrototype.addTransaction = function (tx) {
         if (!alreadyInstalledInAddStatement) {
             var txPrototype = Object.getPrototypeOf(tx);
             var originalAddStatement = txPrototype.addStatement;
-            
+
             txPrototype.addStatement = function (sql, values, success, error) {
                 // Inject an explicit CAST around parameters with numeric types
                 sql = sql.replace(/(\:qpde\w+\d*)/g, "CAST($1 AS REAL)");
@@ -136,18 +138,18 @@ window.sqlitePlugin.openDatabase = function(options, successCallback, errorCallb
         function (key) {
             // Clone the options and set the `key`
             var newOptions = {};
-            for (var prop in options) { 
+            for (var prop in options) {
                 if (options.hasOwnProperty(prop)) {
-                    newOptions[prop] = options[prop]; 
+                    newOptions[prop] = options[prop];
                 }
             }
             newOptions["key"] = key;
-            
+
             // Ensure `location` is set (it is mandatory now)
-            if (!newOptions.location) {
+            if (newOptions.location === undefined) {
                 newOptions.location = "default";
             }
-            
+
             var db = originalOpenDatabase.call(window.sqlitePlugin, newOptions, successCallback, errorCallback);
             installNumericParametersWorkaround(db);
             return db;
