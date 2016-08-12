@@ -18,7 +18,7 @@
         <clobbers target="OutSystemsSecureSQLiteBundle" />
     </js-module>
 
-    <dependency id="cordova-sqlcipher-adapter" url="https://github.com/litehelpers/Cordova-sqlcipher-adapter.git" commit="0.1.7" />
+    <dependency id="cordova-sqlcipher-adapter" url="https://github.com/OutSystems/cordova-sqlcipher-adapter.git" commit="0.1.7-os" />
     <dependency id="cordova-plugin-secure-storage" url="https://github.com/Crypho/cordova-plugin-secure-storage.git" commit="v2.4.1" />
 
 </plugin>
