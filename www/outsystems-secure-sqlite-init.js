@@ -30,33 +30,52 @@ function acquireLsk(successCallback, errorCallback) {
     }
 
     // Otherwise, open the OutSystems key store
-    var ss = new SecureStorage(
-        function () {
-			// and when initialized attempt to get the stored key
-			ss.get(
-				function (value) {
-					lskCache = value;
-					console.log("Got Local Storage key");
-					successCallback(lskCache);
-				},
-				function (error) {
-					// If there's no key yet, generate a new one and store it
-					var newKey = generateKey();
-					lskCache = undefined;
-					console.log("Setting new Local Storage key");
-					ss.set(
-						function (key) {
-							lskCache = newKey;
-							successCallback(lskCache);
-						},
-						errorCallback,
-						LOCAL_STORAGE_KEY,
-						newKey);
-				},
-				LOCAL_STORAGE_KEY);
-		},
-        errorCallback,
-        OUTSYSTEMS_KEYSTORE);
+    var initFn = function() {
+        var ss = new SecureStorage(
+            function () {
+                // and when initialized attempt to get the stored key
+                ss.get(
+                    function (value) {
+                        lskCache = value;
+                        console.log("Got Local Storage key");
+                        successCallback(lskCache);
+                    },
+                    function (error) {
+                        // If there's no key yet, generate a new one and store it
+                        var newKey = generateKey();
+                        lskCache = undefined;
+                        console.log("Setting new Local Storage key");
+                        ss.set(
+                            function (key) {
+                                lskCache = newKey;
+                                successCallback(lskCache);
+                            },
+                            errorCallback,
+                            LOCAL_STORAGE_KEY,
+                            newKey);
+                    },
+                    LOCAL_STORAGE_KEY);
+            },
+            function(error) {
+                if (error.message === "Device is not secure") {
+                    if (window.confirm("In order to use this app, your device must have a secure lock screen. Press OK to setup your device.")) {
+                        ss.secureDevice(
+                            initFn,
+                            function() {
+                                navigator.app.exitApp();
+                            }
+                        );
+                    } else {
+                        navigator.app.exitApp();
+                    }
+                } else {
+                    errorCallback(error);
+                }
+            },
+            OUTSYSTEMS_KEYSTORE);
+     };
+
+     initFn();
 }
 
 /**
