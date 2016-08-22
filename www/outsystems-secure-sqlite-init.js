@@ -147,6 +147,17 @@ function installNumericParametersWorkaround(db) {
     alreadyInstalledNumericParamsWorkaround = true;
 }
 
+/**
+ * Validates the options passed to a `openDatabase` call are correctly set.
+ *
+ * @param {Object} options	Options object to be passed to a `openDatabase` call.
+ */
+function validateDbOptions(options) {
+	if (typeof options.key !== 'string' || options.key.length === 0) {
+		throw new Error("Attempting to open a database without a valid encryption key.");
+	}
+}
+
 // Set the `isSQLCipherPlugin` feature flag to help ensure the right plugin was loaded
 window.sqlitePlugin.sqliteFeatures["isSQLCipherPlugin"] = true;
 
@@ -155,20 +166,24 @@ var originalOpenDatabase = window.sqlitePlugin.openDatabase;
 window.sqlitePlugin.openDatabase = function(options, successCallback, errorCallback) {
     return acquireLsk(
         function (key) {
-            // Clone the options and set the `key`
+            // Clone the options
             var newOptions = {};
             for (var prop in options) {
                 if (options.hasOwnProperty(prop)) {
                     newOptions[prop] = options[prop];
                 }
             }
-            newOptions["key"] = key;
-
-            // Ensure `location` is set (it is mandatory now)
+			
+			// Ensure `location` is set (it is mandatory now)
             if (newOptions.location === undefined) {
                 newOptions.location = "default";
             }
+			
+			// Set the `key` to the one provided
+			newOptions.key = key;
 
+			// Validate the options and call the original openDatabase
+			validateDbOptions(newOptions);
             var db = originalOpenDatabase.call(window.sqlitePlugin, newOptions, successCallback, errorCallback);
             installNumericParametersWorkaround(db);
             return db;
