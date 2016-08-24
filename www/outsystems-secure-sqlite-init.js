@@ -100,53 +100,6 @@ function generateKey() {
             }).join("");
 }
 
-var alreadyInstalledNumericParamsWorkaround = false;
-
-/**
- * Instruments SQLiteTransaction.prototype.addStatement to workaround the fact that
- * numeric query parameters are passed to SQLCipher as Strings, resulting in unexpected
- * behaviors.
- *
- * The current implementation takes advantage of OutSystems-specific parameter name conventions.
- *
- * @param {SQLiteDatabase} db   An instance of the database class where to install the workaround.
- */
-function installNumericParametersWorkaround(db) {
-    if (alreadyInstalledNumericParamsWorkaround) {
-        // We install the workaround in the prototypes, so there's no need to do it twice
-        return;
-    }
-
-    var alreadyInstalledInAddStatement = false;
-
-    // Since the plugin's classes are not public, we follow the prototype of our initial DB object
-    // overriding its `addTransaction` method to get a SQLiteTransaction object
-    var dbPrototype = Object.getPrototypeOf(db);
-    var originalAddTransaction = dbPrototype.addTransaction;
-
-    dbPrototype.addTransaction = function (tx) {
-        if (!alreadyInstalledInAddStatement) {
-            var txPrototype = Object.getPrototypeOf(tx);
-            var originalAddStatement = txPrototype.addStatement;
-
-            txPrototype.addStatement = function (sql, values, success, error) {
-                // Inject an explicit CAST around parameters with numeric types
-                sql = sql.replace(/(\:qpde\w+\d*)/g, "CAST($1 AS REAL)");
-                sql = sql.replace(/(\:qp(lo|in)\w+\d*)/g, "CAST($1 AS INTEGER)");
-
-                return originalAddStatement.call(this, sql, values, success, error);
-            };
-
-            alreadyInstalledInAddStatement = true;
-            console.log("Numeric parameters workaround installed successfully.");
-        }
-
-        return originalAddTransaction.call(this, tx);
-    };
-
-    alreadyInstalledNumericParamsWorkaround = true;
-}
-
 /**
  * Validates the options passed to a `openDatabase` call are correctly set.
  *
@@ -184,9 +137,7 @@ window.sqlitePlugin.openDatabase = function(options, successCallback, errorCallb
 
             // Validate the options and call the original openDatabase
             validateDbOptions(newOptions);
-            var db = originalOpenDatabase.call(window.sqlitePlugin, newOptions, successCallback, errorCallback);
-            installNumericParametersWorkaround(db);
-            return db;
+            return originalOpenDatabase.call(window.sqlitePlugin, newOptions, successCallback, errorCallback);
         },
         errorCallback);
 };
