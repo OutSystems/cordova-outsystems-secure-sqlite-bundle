@@ -1,4 +1,7 @@
 # OutSystems Secure SQLite Plugin
+
+:warning: This plugin is SUPPORTED by OutSystems. Customers entitled to Support Services may obtain assistance through Support.
+
 Cordova meta-plugin that bundles requirements for secure SQLite device storage and initialization code for easy usage within OutSystems Platform native mobile apps.
 
 ## Supported Platforms
