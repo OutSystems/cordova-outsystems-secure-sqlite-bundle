@@ -33,6 +33,10 @@ var lskCache = "";
  * @return {number} a hash code value for the given string.
  */
 hashCode = function(s) {
+    if (!s) {
+        return 0;
+    }
+
     var h = 0, l = s.length, i = 0;
     if ( l > 0 )
         while (i < l)
