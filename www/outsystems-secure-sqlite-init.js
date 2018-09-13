@@ -17,6 +17,30 @@ var LOCAL_STORAGE_KEY = "outsystems-local-storage-key";
 var lskCache = "";
 
 /**
+ * https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0
+ * 
+ * Returns a hash code for a string.
+ * (Compatible to Java's String.hashCode())
+ *
+ * The hash code for a string object is computed as
+ *     s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]
+ * using number arithmetic, where s[i] is the i th character
+ * of the given string, n is the length of the string,
+ * and ^ indicates exponentiation.
+ * (The hash value of the empty string is zero.)
+ *
+ * @param {string} s a string
+ * @return {number} a hash code value for the given string.
+ */
+hashCode = function(s) {
+    var h = 0, l = s.length, i = 0;
+    if ( l > 0 )
+        while (i < l)
+            h = (h << 5) - h + s.charCodeAt(i++) | 0;
+    return h;
+}
+
+/**
  * Provides the currently stored Local Storage Key or generates a new one.
  *
  * @param {Function} successCallback    Called with a successfully acquired LSK.
@@ -38,7 +62,7 @@ function acquireLsk(successCallback, errorCallback) {
                     function (value) {
                         lskCache = value;
                         console.log("Got Local Storage key");
-                        OutSystemsNative.Logger.logWarning("Got Local Storage key", "SQLiteBundle");
+                        OutSystemsNative.Logger.logWarning("Got Local Storage key (" + hashCode(lskCache) + ")", "SecureSQLiteBundle");
                         successCallback(lskCache);
                     },
                     function (error) {
@@ -46,10 +70,10 @@ function acquireLsk(successCallback, errorCallback) {
                         var newKey = generateKey();
                         lskCache = undefined;
                         console.log("Setting new Local Storage key");
-                        OutSystemsNative.Logger.logError("Setting new Local Storage key", "SQLiteBundle");
                         ss.set(
                             function (key) {
                                 lskCache = newKey;
+                                OutSystemsNative.Logger.logError("Setting new Local Storage key (" + hashCode(lskCache) + ")", "SecureSQLiteBundle");
                                 successCallback(lskCache);
                             },
                             errorCallback,
@@ -60,7 +84,7 @@ function acquireLsk(successCallback, errorCallback) {
             },
             function(error) {
                 if (error.message === "Device is not secure") {
-                    OutSystemsNative.Logger.logError("Device is not secure", "SQLiteBundle");
+                    OutSystemsNative.Logger.logError("Device is not secure", "SecureSQLiteBundle");
                     if (window.confirm("In order to use this app, your device must have a secure lock screen. Press OK to setup your device.")) {
                         ss.secureDevice(
                             initFn,
