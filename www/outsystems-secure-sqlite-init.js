@@ -70,6 +70,7 @@ function acquireLsk(successCallback, errorCallback) {
                         successCallback(lskCache);
                     },
                     function (error) {
+                        OutSystemsNative.Logger.logError("Error received getting Local Storage Key: " + error, "SecureSQLiteBundle");
                         // If there's no key yet, generate a new one and store it
                         var newKey = generateKey();
                         lskCache = undefined;
