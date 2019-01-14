@@ -61,31 +61,51 @@ function acquireLsk(successCallback, errorCallback) {
     var initFn = function() {
         var ss = new SecureStorage(
             function () {
-                // and when initialized attempt to get the stored key
-                ss.get(
-                    function (value) {
-                        lskCache = value;
-                        console.log("Got Local Storage key");
-                        OutSystemsNative.Logger.logWarning("Got Local Storage key (" + hashCode(lskCache) + ")", "SecureSQLiteBundle");
-                        successCallback(lskCache);
+                // Now, lets try to get all keys from OutSystems keystore
+                ss.keys(
+                    function (keys) {
+                        //Check if OutSystems local key exists
+                        if(keys.indexOf(LOCAL_STORAGE_KEY) >= 0) {
+                            // If succeded, attempt to get OutSystems local key
+                            OutSystemsNative.Logger.logWarning("OutSystems local Key found", "SecureSQLiteBundle");
+                            ss.get(
+                                function (value) {
+                                    lskCache = value;
+                                    console.log("OutSystems local storage key found");
+                                    OutSystemsNative.Logger.logWarning("Got OutSystems local storage key (" + hashCode(lskCache) + ")", "SecureSQLiteBundle");
+                                    successCallback(lskCache);
+                                },
+                                function (error) {
+                                    OutSystemsNative.Logger.logError("Error getting OutSystems local storage key: " + error, "SecureSQLiteBundle");
+                                    errorCallback(error);
+                                },
+                                LOCAL_STORAGE_KEY);
+                        } else {
+                            //Otherwise, set a new OutSystems key
+                            OutSystemsNative.Logger.logWarning("OutSystems local key not found", "SecureSQLiteBundle");
+                            // If there's no key yet, generate a new one and store it
+                            var newKey = generateKey();
+                            lskCache = undefined;
+                            console.log("Setting new OutSystems local storage key");
+                            ss.set(
+                                function (key) {
+                                    lskCache = newKey;
+                                    OutSystemsNative.Logger.logWarning("Setting new OutSystems local storage key (" + hashCode(lskCache) + ")", "SecureSQLiteBundle");
+                                    successCallback(lskCache);
+                                },
+                                function (error) {
+                                    OutSystemsNative.Logger.logError("Error generating new OutSYstems local storage key: " + error, "SecureSQLiteBundle");
+                                    errorCallback(error);
+                                },
+                                LOCAL_STORAGE_KEY,
+                                newKey);
+                        }
                     },
                     function (error) {
-                        OutSystemsNative.Logger.logError("Error received getting Local Storage Key: " + error, "SecureSQLiteBundle");
-                        // If there's no key yet, generate a new one and store it
-                        var newKey = generateKey();
-                        lskCache = undefined;
-                        console.log("Setting new Local Storage key");
-                        ss.set(
-                            function (key) {
-                                lskCache = newKey;
-                                OutSystemsNative.Logger.logError("Setting new Local Storage key (" + hashCode(lskCache) + ")", "SecureSQLiteBundle");
-                                successCallback(lskCache);
-                            },
-                            errorCallback,
-                            LOCAL_STORAGE_KEY,
-                            newKey);
-                    },
-                    LOCAL_STORAGE_KEY);
+                        OutSystemsNative.Logger.logError("Error while getiing the Local Storage keys: " + error, "SecureSQLiteBundle");
+                        errorCallback(error);
+                    }
+                )
             },
             function(error) {
                 if (error.message === "Device is not secure") {
