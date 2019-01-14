@@ -71,7 +71,7 @@ function acquireLsk(successCallback, errorCallback) {
                             ss.get(
                                 function (value) {
                                     lskCache = value;
-                                    console.log("OutSystems local storage key found");
+                                    console.log("OutSystems local key found");
                                     OutSystemsNative.Logger.logWarning("Got OutSystems local storage key (" + hashCode(lskCache) + ")", "SecureSQLiteBundle");
                                     successCallback(lskCache);
                                 },
