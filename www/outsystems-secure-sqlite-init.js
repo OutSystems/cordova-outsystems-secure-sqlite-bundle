@@ -67,34 +67,29 @@ function acquireLsk(successCallback, errorCallback) {
                         //Check if OutSystems local key exists
                         if(keys.indexOf(LOCAL_STORAGE_KEY) >= 0) {
                             // If succeded, attempt to get OutSystems local key
-                            OutSystemsNative.Logger.logWarning("OutSystems local Key found", "SecureSQLiteBundle");
                             ss.get(
                                 function (value) {
                                     lskCache = value;
-                                    console.log("OutSystems local key found");
-                                    OutSystemsNative.Logger.logWarning("Got OutSystems local storage key (" + hashCode(lskCache) + ")", "SecureSQLiteBundle");
                                     successCallback(lskCache);
                                 },
                                 function (error) {
-                                    OutSystemsNative.Logger.logError("Error getting OutSystems local storage key: " + error, "SecureSQLiteBundle");
+                                    OutSystemsNative.Logger.logError("Error getting local storage key from keychain: " + error, "SecureSQLiteBundle");
                                     errorCallback(error);
                                 },
                                 LOCAL_STORAGE_KEY);
                         } else {
-                            //Otherwise, set a new OutSystems key
-                            OutSystemsNative.Logger.logWarning("OutSystems local key not found", "SecureSQLiteBundle");
+                            // Otherwise, set a new OutSystems key
                             // If there's no key yet, generate a new one and store it
                             var newKey = generateKey();
                             lskCache = undefined;
-                            console.log("Setting new OutSystems local storage key");
                             ss.set(
                                 function (key) {
+                                    OutSystemsNative.Logger.logWarning("Setting new local storage key.", "SecureSQLiteBundle");
                                     lskCache = newKey;
-                                    OutSystemsNative.Logger.logWarning("Setting new OutSystems local storage key (" + hashCode(lskCache) + ")", "SecureSQLiteBundle");
                                     successCallback(lskCache);
                                 },
                                 function (error) {
-                                    OutSystemsNative.Logger.logError("Error generating new OutSYstems local storage key: " + error, "SecureSQLiteBundle");
+                                    OutSystemsNative.Logger.logError("Error generating new local storage key: " + error, "SecureSQLiteBundle");
                                     errorCallback(error);
                                 },
                                 LOCAL_STORAGE_KEY,
@@ -102,14 +97,14 @@ function acquireLsk(successCallback, errorCallback) {
                         }
                     },
                     function (error) {
-                        OutSystemsNative.Logger.logError("Error while getiing the Local Storage keys: " + error, "SecureSQLiteBundle");
+                        OutSystemsNative.Logger.logError("Error while getting local storage key: " + error, "SecureSQLiteBundle");
                         errorCallback(error);
                     }
                 )
             },
             function(error) {
                 if (error.message === "Device is not secure") {
-                    OutSystemsNative.Logger.logError("Device is not secure", "SecureSQLiteBundle");
+                    OutSystemsNative.Logger.logError("Device is not secure.", "SecureSQLiteBundle");
                     if (window.confirm("In order to use this app, your device must have a secure lock screen. Press OK to setup your device.")) {
                         ss.secureDevice(
                             initFn,
