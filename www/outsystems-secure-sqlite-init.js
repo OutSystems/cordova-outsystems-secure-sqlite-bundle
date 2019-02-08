@@ -11,7 +11,7 @@ if (typeof(window.sqlitePlugin.openDatabase) !== "function") {
     throw new Error("Dependencies were not loaded correctly: window.sqlitePlugin does not provide an `openDatabase` function.");
 }
 
-var OUTSYSTEMS_KEYSTORE = "outsystems-key-store"
+var OUTSYSTEMS_KEYSTORE = "outsystems-key-store";
 var LOCAL_STORAGE_KEY = "outsystems-local-storage-key";
 
 var lskCache = "";
@@ -32,7 +32,7 @@ var lskCache = "";
  * @param {string} s a string
  * @return {number} a hash code value for the given string.
  */
-hashCode = function(s) {
+var hashCode = function(s) {
     if (!s) {
         return 0;
     }
