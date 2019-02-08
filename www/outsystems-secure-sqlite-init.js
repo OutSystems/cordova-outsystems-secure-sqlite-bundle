@@ -11,10 +11,38 @@ if (typeof(window.sqlitePlugin.openDatabase) !== "function") {
     throw new Error("Dependencies were not loaded correctly: window.sqlitePlugin does not provide an `openDatabase` function.");
 }
 
-var OUTSYSTEMS_KEYSTORE = "outsystems-key-store"
+var OUTSYSTEMS_KEYSTORE = "outsystems-key-store";
 var LOCAL_STORAGE_KEY = "outsystems-local-storage-key";
 
 var lskCache = "";
+
+/**
+ * https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0
+ * 
+ * Returns a hash code for a string.
+ * (Compatible to Java's String.hashCode())
+ *
+ * The hash code for a string object is computed as
+ *     s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]
+ * using number arithmetic, where s[i] is the i th character
+ * of the given string, n is the length of the string,
+ * and ^ indicates exponentiation.
+ * (The hash value of the empty string is zero.)
+ *
+ * @param {string} s a string
+ * @return {number} a hash code value for the given string.
+ */
+var hashCode = function(s) {
+    if (!s) {
+        return 0;
+    }
+
+    var h = 0, l = s.length, i = 0;
+    if ( l > 0 )
+        while (i < l)
+            h = (h << 5) - h + s.charCodeAt(i++) | 0;
+    return h;
+}
 
 /**
  * Provides the currently stored Local Storage Key or generates a new one.
@@ -33,31 +61,52 @@ function acquireLsk(successCallback, errorCallback) {
     var initFn = function() {
         var ss = new SecureStorage(
             function () {
-                // and when initialized attempt to get the stored key
-                ss.get(
-                    function (value) {
-                        lskCache = value;
-                        console.log("Got Local Storage key");
-                        successCallback(lskCache);
-                    },
-                    function (error) {
-                        // If there's no key yet, generate a new one and store it
-                        var newKey = generateKey();
-                        lskCache = undefined;
-                        console.log("Setting new Local Storage key");
-                        ss.set(
-                            function (key) {
-                                lskCache = newKey;
-                                successCallback(lskCache);
-                            },
-                            errorCallback,
-                            LOCAL_STORAGE_KEY,
-                            newKey);
-                    },
-                    LOCAL_STORAGE_KEY);
+                rewriteLsk(ss, function(){
+                    // Now, lets try to get all keys from OutSystems keystore
+                    ss.keys(
+                        function (keys) {
+                            //Check if OutSystems local key exists
+                            if(keys.indexOf(LOCAL_STORAGE_KEY) >= 0) {
+                                // If succeded, attempt to get OutSystems local key
+                                ss.get(
+                                    function (value) {
+                                        lskCache = value;
+                                        successCallback(lskCache);
+                                    },
+                                    function (error) {
+                                        OutSystemsNative.Logger.logError("Error getting local storage key from keychain: " + error, "SecureSQLiteBundle");
+                                        errorCallback(error);
+                                    },
+                                    LOCAL_STORAGE_KEY);
+                            } else {
+                                // Otherwise, set a new OutSystems key
+                                // If there's no key yet, generate a new one and store it
+                                var newKey = generateKey();
+                                lskCache = undefined;
+                                ss.set(
+                                    function (key) {
+                                        OutSystemsNative.Logger.logWarning("Setting new local storage key.", "SecureSQLiteBundle");
+                                        lskCache = newKey;
+                                        successCallback(lskCache);
+                                    },
+                                    function (error) {
+                                        OutSystemsNative.Logger.logError("Error generating new local storage key: " + error, "SecureSQLiteBundle");
+                                        errorCallback(error);
+                                    },
+                                    LOCAL_STORAGE_KEY,
+                                    newKey);
+                            }
+                        },
+                        function (error) {
+                            OutSystemsNative.Logger.logError("Error while getting local storage key: " + error, "SecureSQLiteBundle");
+                            errorCallback(error);
+                        }
+                    );
+                });
             },
             function(error) {
                 if (error.message === "Device is not secure") {
+                    OutSystemsNative.Logger.logError("Device is not secure.", "SecureSQLiteBundle");
                     if (window.confirm("In order to use this app, your device must have a secure lock screen. Press OK to setup your device.")) {
                         ss.secureDevice(
                             initFn,
@@ -72,10 +121,29 @@ function acquireLsk(successCallback, errorCallback) {
                     errorCallback(error);
                 }
             },
-            OUTSYSTEMS_KEYSTORE);
-     };
+        OUTSYSTEMS_KEYSTORE);
+    };
+    initFn();
+}
 
-     initFn();
+// Method to rewrite Local Storage Key into keychain
+function rewriteLsk(ss, callback) {
+	ss.get(
+		function (value) {
+			ss.set(
+				function (key) {
+					callback();
+				},
+				function (error) {
+					callback();
+				},
+			LOCAL_STORAGE_KEY,
+			value);
+		},
+		function (error) {
+			callback();
+		},
+	LOCAL_STORAGE_KEY);
 }
 
 /**
