@@ -1,6 +1,7 @@
 // Force dependency load
 var SQLiteCipher = require('cordova-sqlcipher-adapter.SQLitePlugin');
 var SecureStorage = require('cordova-plugin-secure-storage.SecureStorage');
+var OutSystemsNative = require('cordova-outsystems-logger.OutSystemsNative');
 
 // Validate SQLite plugin API is properly set
 if (typeof(window.sqlitePlugin) === "undefined") {
