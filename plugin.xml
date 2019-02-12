@@ -20,7 +20,7 @@
 
     <dependency id="cordova-sqlcipher-adapter" url="https://github.com/OutSystems/cordova-sqlcipher-adapter.git" commit="0.1.7-os.3" />
     <dependency id="cordova-plugin-secure-storage" url="https://github.com/OutSystems/cordova-plugin-secure-storage.git" commit="2.6.8" />
-    <dependency id="cordova-outsystems-logger" url="https://e65fec09fc31747a2a0e455c0757dcf2cf786a63:@github.com/OutSystems/cordova-outsystems-logger.git" commit="1.3.1" />
+    <dependency id="com.outsystems.plugins.logger" url="https://e65fec09fc31747a2a0e455c0757dcf2cf786a63:@github.com/OutSystems/cordova-outsystems-logger.git" commit="1.3.1" />
 
 
     <engines>
