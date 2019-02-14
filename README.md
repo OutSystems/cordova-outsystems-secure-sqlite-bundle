@@ -27,6 +27,9 @@ window.sqlitePlugin.openDatabase(options, successCallback, errorCallback);
 
 Refer to the Cordova SQLCipher Adapter plugin documentation for samples and details of the supported features.
 
+## Limitations
+Android Auto Backup for Apps is not compatible with Cipher Local Storage plugin which automatically backs up a user's data from apps that target and run on Android 6.0 (API level 23) or later in enabled in settings. Said that AndroidManifest.xml is modified to disable auto backup by setting android:allowBackup attribute to false, avoiding backing up or restoring the app data.
+
 ## Known Issues
 - The usage of the SecureStorage plugin requires **Android devices** to have a PIN (or similar) set. Removal of the PIN will effectively **render the database unreadable**, as the key will be lost.
 - It is not possible to open existing databases that are not encrypted.
