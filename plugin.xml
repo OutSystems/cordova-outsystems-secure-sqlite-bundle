@@ -2,7 +2,7 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.outsystems.plugins.SecureSQLiteBundle"
-    version="1.0.1-sclogs">
+    version="1.0.1-sclogs2">
 
     <name>Cordova OutSystems secure SQLite bundle</name>
 
@@ -18,7 +18,7 @@
         <clobbers target="OutSystemsSecureSQLiteBundle" />
     </js-module>
 
-    <dependency id="cordova-sqlcipher-adapter" url="https://github.com/OutSystems/cordova-sqlcipher-adapter.git" commit="0.1.7-OS3-extralogs" />
+    <dependency id="cordova-sqlcipher-adapter" url="https://github.com/OutSystems/cordova-sqlcipher-adapter.git" commit="0.1.7-OS4-extralogs" />
     <dependency id="cordova-plugin-secure-storage" url="https://github.com/Crypho/cordova-plugin-secure-storage.git" commit="v2.6.8" />
 
 </plugin>
