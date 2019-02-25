@@ -100,12 +100,12 @@ function acquireLsk(successCallback, errorCallback) {
 }
 
 /**
- * Method to rewrite Local Storage Key into keychain	
- * 	
- * This method was created to bypass secure storage update issue.	
- * The keys() method was returning null if the entries were written	
- * with an older version of Secure Storage plugin.	
- * 	
+ * Method to rewrite Local Storage Key into keychain
+ * 
+ * This method was created to bypass secure storage update issue.
+ * The keys() method was returning null if the entries were written
+ * with an older version of Secure Storage plugin.
+ * 
 **/
 function rewriteLsk(ss, callback) {
 	ss.get(
