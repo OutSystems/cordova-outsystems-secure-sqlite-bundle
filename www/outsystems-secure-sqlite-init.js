@@ -1,6 +1,7 @@
 // Force dependency load
 var SQLiteCipher = require('cordova-sqlcipher-adapter.SQLitePlugin');
 var SecureStorage = require('cordova-plugin-secure-storage.SecureStorage');
+var Logger = require('com.outsystems.plugins.logger.OSLogger');
 
 // Validate SQLite plugin API is properly set
 if (typeof(window.sqlitePlugin) === "undefined") {
@@ -47,7 +48,7 @@ function acquireLsk(successCallback, errorCallback) {
                                         successCallback(lskCache);
                                     },
                                     function (error) {
-                                        OutSystemsNative.Logger.logError("Error getting local storage key from keychain: " + error, "SecureSQLiteBundle");
+                                        Logger.logError("Error getting local storage key from keychain: " + error, "SecureSQLiteBundle");
                                         errorCallback(error);
                                     },
                                     LOCAL_STORAGE_KEY);
@@ -58,12 +59,12 @@ function acquireLsk(successCallback, errorCallback) {
                                 lskCache = undefined;
                                 ss.set(
                                     function (key) {
-                                        OutSystemsNative.Logger.logWarning("Setting new local storage key.", "SecureSQLiteBundle");
+                                        Logger.logWarning("Setting new local storage key.", "SecureSQLiteBundle");
                                         lskCache = newKey;
                                         successCallback(lskCache);
                                     },
                                     function (error) {
-                                        OutSystemsNative.Logger.logError("Error generating new local storage key: " + error, "SecureSQLiteBundle");
+                                        Logger.logError("Error generating new local storage key: " + error, "SecureSQLiteBundle");
                                         errorCallback(error);
                                     },
                                     LOCAL_STORAGE_KEY,
@@ -71,7 +72,7 @@ function acquireLsk(successCallback, errorCallback) {
                             }
                         },
                         function (error) {
-                            OutSystemsNative.Logger.logError("Error while getting local storage key: " + error, "SecureSQLiteBundle");
+                            Logger.logError("Error while getting local storage key: " + error, "SecureSQLiteBundle");
                             errorCallback(error);
                         }
                     );
@@ -79,7 +80,7 @@ function acquireLsk(successCallback, errorCallback) {
             },
             function(error) {
                 if (error.message === "Device is not secure") {
-                    OutSystemsNative.Logger.logError("Device is not secure.", "SecureSQLiteBundle");
+                    Logger.logError("Device is not secure.", "SecureSQLiteBundle");
                     if (window.confirm("In order to use this app, your device must have a secure lock screen. Press OK to setup your device.")) {
                         ss.secureDevice(
                             initFn,
