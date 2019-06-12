@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- Support to 64-bits [RNMT-2669](https://outsystemsrd.atlassian.net/browse/RNMT-2669)
+
 ### Additions
 - Disables Android Auto Backup for apps [RNMT-1853](https://outsystemsrd.atlassian.net/browse/RNMT-1853)
 
