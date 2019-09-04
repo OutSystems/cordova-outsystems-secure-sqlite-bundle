@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changes
+- Updates version of cordova-plugin-secure-storage to 2.6.8-OS [RNMT-3257](https://outsystemsrd.atlassian.net/browse/RNMT-3257)
+
 ## 2.0.0 - 2019-06-12
 ### Additions
 - Support to 64-bits [RNMT-2669](https://outsystemsrd.atlassian.net/browse/RNMT-2669)
