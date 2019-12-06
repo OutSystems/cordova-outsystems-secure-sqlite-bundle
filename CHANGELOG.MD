@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changes
+- Update version of cordova-plugin-secure-storage to 2.6.8-OS1 [RNMT-3540](https://outsystemsrd.atlassian.net/browse/RNMT-3540)
 
 ## 2.0.1 - 2019-09-04
 ### Changes
