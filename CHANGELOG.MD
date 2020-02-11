@@ -8,13 +8,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 2.0.3 - 2020-01-21
 ### Changes
-- Update version of cordova-plugin-secure-storage to 2.6.8-OS2 [RNMT-3604](https://outsystemsrd.atlassian.net/browse/RNMT-3604)
-
-### Fixes
-- Lock screen authentication can no longer be bypassed in Android 10 devices [RNMT-3604](https://outsystemsrd.atlassian.net/browse/RNMT-3604)
-
-## 2.0.2 - 2019-12-26
-### Changes
 - Update version of cordova-plugin-secure-storage to 2.6.8-OS1 [RNMT-3540](https://outsystemsrd.atlassian.net/browse/RNMT-3540)
 
 ## 2.0.1 - 2019-09-04
