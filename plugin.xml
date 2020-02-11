@@ -15,7 +15,7 @@
     </js-module>
 
     <dependency id="cordova-sqlcipher-adapter" url="https://github.com/OutSystems/cordova-sqlcipher-adapter.git" commit="0.1.7-OS5" />
-    <dependency id="cordova-plugin-secure-storage" url="https://github.com/OutSystems/cordova-plugin-secure-storage.git" commit="2.6.8-OS1" />
+    <dependency id="cordova-plugin-secure-storage" url="https://github.com/OutSystems/cordova-plugin-secure-storage.git" commit="2.6.8-OS3" />
     
     <dependency id="outsystems-plugin-disable-backup" url="https://github.com/OutSystems/outsystems-plugin-disable-backup.git" commit="1.0.0" />
     <dependency id="com.outsystems.plugins.logger" />
