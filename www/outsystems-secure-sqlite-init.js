@@ -79,7 +79,6 @@ function acquireLsk(successCallback, errorCallback) {
                 });
             },
             function(error) {
-                // When no lock screen is configured in the device
                 if (error.message === "Device is not secure") {
                     Logger.logError("Device is not secure.", "SecureSQLiteBundle");
                     if (window.confirm("In order to use this app, your device must have a secure lock screen. Press OK to setup your device.")) {
@@ -92,12 +91,6 @@ function acquireLsk(successCallback, errorCallback) {
                     } else {
                         navigator.app.exitApp();
                     }
-                // When the user cancelled or failed to unlock the lock screen
-                } else if (error.message === "Authentication failed") {
-                    Logger.logError("Authentication failed.", "SecureSQLiteBundle");
-                    window.alert("In order to use this app, you must authenticate in the secure lock screen.");
-                    navigator.app.exitApp();
-                // Otherwise
                 } else {
                     errorCallback(error);
                 }
