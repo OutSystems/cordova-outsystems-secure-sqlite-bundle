@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## 2.0.4 - 2020-02-19
 ### Changes
 - Update version of cordova-plugin-secure-storage to 2.6.8-OS3 [RNMT-3824](https://outsystemsrd.atlassian.net/browse/RNMT-3824)
 
@@ -40,7 +42,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Additions
 - Updates cordova-sqlcipher-adapter to version 0.1.7-os.3 [RNMT-2530](https://outsystemsrd.atlassian.net/browse/RNMT-2530)
 
-[Unreleased]: https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/compare/2.0.3...HEAD
+[Unreleased]: https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/compare/2.0.4...HEAD
+[2.0.4]: https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/compare/2.0.1...2.0.2
 [2.0.1]: https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/compare/2.0.0...2.0.1
