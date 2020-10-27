@@ -91,6 +91,12 @@ function acquireLsk(successCallback, errorCallback) {
                     } else {
                         navigator.app.exitApp();
                     }
+                // When secure storage key migration fails
+                } else if (error.message === "MIGRATION FAILED") {
+                    Logger.logError("Migration Failed.", "SecureSQLiteBundle");
+                    window.alert("Migration from old secure storage to a new one failed. Open again the app to retry the operation");
+                    navigator.app.exitApp();
+                // Otherwise
                 } else {
                     errorCallback(error);
                 }
