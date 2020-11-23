@@ -18,7 +18,6 @@
     <dependency id="cordova-plugin-secure-storage" url="https://github.com/OutSystems/cordova-plugin-secure-storage.git" commit="2.6.8-OS5" />
     
     <dependency id="outsystems-plugin-disable-backup" url="https://github.com/OutSystems/outsystems-plugin-disable-backup.git" commit="1.0.1" />
-    <dependency id="com.outsystems.plugins.logger" />
 
     <engines>
         <engine name="cordova" version=">=6.4.0"/>
