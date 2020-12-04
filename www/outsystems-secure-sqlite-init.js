@@ -2,12 +2,9 @@
 var SQLiteCipher = require('cordova-sqlcipher-adapter.SQLitePlugin');
 var SecureStorage = require('cordova-plugin-secure-storage.SecureStorage');
 
-var Logger;
-try{
-    var loggerModule = require.specified('@outystems/cordova-outsystems-logger.OSLogger') ? '@outystems/cordova-outsystems-logger.OSLogger' : 'com.outsystems.plugins.logger.OSLogger';
-    Logger = require(loggerModule);
-}catch(error){
-    console.log("There was an error producing the Logger")
+var Logger = !!OutSystemsNative ? OutSystemsNative.Logger : undefined;
+if (typeof(Logger) === "undefined") {
+    throw new Error("Dependencies were not loaded correctly: OutSystemsNative.Logger is not defined.");
 }
 // Validate SQLite plugin API is properly set
 if (typeof(window.sqlitePlugin) === "undefined") {
