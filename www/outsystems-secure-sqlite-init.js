@@ -16,6 +16,7 @@ if (typeof(window.sqlitePlugin.openDatabase) !== "function") {
 }
 
 var OUTSYSTEMS_KEYSTORE = "outsystems-key-store";
+debugger;
 var LOCAL_STORAGE_KEY = "outsystems-local-storage-key";
 
 var lskCache = "";
