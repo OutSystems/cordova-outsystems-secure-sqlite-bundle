@@ -1,6 +1,6 @@
 {
   "name": "com.outsystems.plugins.SecureSQLiteBundle",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "Bundle of SQLite related storage plugins and initialization code for easy use with the OutSystems Platform",
   "cordova": {
     "id": "com.outsystems.plugins.SecureSQLiteBundle",
