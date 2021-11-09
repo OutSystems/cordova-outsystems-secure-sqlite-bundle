@@ -74,7 +74,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Updates cordova-sqlcipher-adapter to version 0.1.7-os.3 [RNMT-2530](https://outsystemsrd.atlassian.net/browse/RNMT-2530)
 
 [Unreleased]: https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/compare/2.0.11...HEAD
-[2.0.10]: https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/compare/2.0.10...2.0.11
+[2.0.11]: https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/compare/2.0.10...2.0.11
 [2.0.10]: https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/compare/2.0.9...2.0.10
 [2.0.9]: https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/compare/2.0.8...2.0.9
 [2.0.8]: https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/compare/2.0.7...2.0.8
