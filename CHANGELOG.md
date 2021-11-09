@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [2.0.11] - 2021-11-09
 ### Fixes
-- New plugin release to include metadata tag in Extensibility Configurations in the OS wrapper
+- Fix: Improved self-healing policy, by updating dependency to sql-adapter (https://outsystemsrd.atlassian.net/browse/RMET-1191)
 
 ## [2.0.10] - 2021-11-04
 ### Fixes
