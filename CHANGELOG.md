@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.12] - 2022-01-05
+### Fixes
+- Fix: error opening apps after creating a PIN for the first time by updating dependency to secure storage. (https://outsystemsrd.atlassian.net/browse/RMET-1292)
 ## [2.0.11] - 2021-11-09
 ### Fixes
 - Fix: Improved self-healing policy, by updating dependency to sql-adapter (https://outsystemsrd.atlassian.net/browse/RMET-1191)
@@ -73,7 +76,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Additions
 - Updates cordova-sqlcipher-adapter to version 0.1.7-os.3 [RNMT-2530](https://outsystemsrd.atlassian.net/browse/RNMT-2530)
 
-[Unreleased]: https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/compare/2.0.11...HEAD
+[Unreleased]: https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/compare/2.0.12...HEAD
+[2.0.12]: https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/compare/2.0.10...2.0.12
 [2.0.11]: https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/compare/2.0.10...2.0.11
 [2.0.10]: https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/compare/2.0.9...2.0.10
 [2.0.9]: https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle/compare/2.0.8...2.0.9
