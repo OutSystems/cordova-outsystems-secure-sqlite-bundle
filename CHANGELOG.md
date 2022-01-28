@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.13] - 2022-01-28
+### Fixes
+- Fix: Implementation of the skip flow in the authentication. (https://outsystemsrd.atlassian.net/browse/RMET-1373)
 ## [2.0.12] - 2022-01-05
 ### Fixes
 - Fix: error opening apps after creating a PIN for the first time by updating dependency to secure storage. (https://outsystemsrd.atlassian.net/browse/RMET-1292)
