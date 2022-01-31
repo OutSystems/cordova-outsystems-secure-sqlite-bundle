@@ -82,7 +82,9 @@ function acquireLsk(successCallback, errorCallback) {
                 });
             },
             function(error) {
-                if (error.message === "Device is not secure") {
+                if (error.message === "Authentication screen skipped") {
+                    navigator.app.exitApp();
+                } else if (error.message === "Device is not secure") {
                     Logger.logError("Device is not secure.", "SecureSQLiteBundle");
                     if (window.confirm("In order to use this app, your device must have a secure lock screen. Press OK to setup your device.")) {
                         ss.secureDevice(
