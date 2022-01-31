@@ -51,8 +51,27 @@ function acquireLsk(successCallback, errorCallback) {
                                         successCallback(lskCache);
                                     },
                                     function (error) {
-                                        Logger.logError("Error getting local storage key from keychain: " + error, "SecureSQLiteBundle");
-                                        errorCallback(error);
+                                        if (error.message === "Key permanently invalidated") {
+                                            // Otherwise, set a new OutSystems key
+                                            // If there's no key yet, generate a new one and store it
+                                            var newKey = generateKey();
+                                            lskCache = undefined;
+                                            ss.set(
+                                                function (key) {
+                                                    Logger.logWarning("Setting new local storage key.", "SecureSQLiteBundle");
+                                                    lskCache = newKey;
+                                                    successCallback(lskCache);
+                                                },
+                                                function (error) {
+                                                    Logger.logError("Error generating new local storage key: " + error, "SecureSQLiteBundle");
+                                                    errorCallback(error);
+                                                },
+                                                LOCAL_STORAGE_KEY,
+                                                newKey);
+                                        } else {
+                                            Logger.logError("Error getting local storage key from keychain: " + error, "SecureSQLiteBundle");
+                                            errorCallback(error);
+                                        }
                                     },
                                     LOCAL_STORAGE_KEY);
                             } else {
