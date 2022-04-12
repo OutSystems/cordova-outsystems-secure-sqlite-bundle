@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.14] - 2022-04-12
+### Fixes
+- Fix: Fix for the error messages: Keystore operation failed, User not authenticated, Key not yet valid. (RMET-1182)
+
 ## [2.0.13] - 2022-01-28
 ### Fixes
 - Fix: Implementation of the skip flow in the authentication. (https://outsystemsrd.atlassian.net/browse/RMET-1373)
