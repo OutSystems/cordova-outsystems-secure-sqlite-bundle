@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.15] - 2022-04-14
+### Fixes
+- Fix: For iOS 15, on the `init` method, if ProtectedData is unavailable, add an observer for the `UIApplicationProtectedDataDidBecomeAvailable` notification that re-triggers `init` when it becomes available. (RMET-1417)
+
 ## [2.0.14] - 2022-04-12
 ### Fixes
 - Fix: Fix for the error messages: Keystore operation failed, User not authenticated, Key not yet valid. (RMET-1182)
