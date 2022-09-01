@@ -97,7 +97,7 @@ function acquireLsk(successCallback, errorCallback) {
                         navigator.app.exitApp();
                     }
                 // When secure storage key migration fails
-                } else if (error.indexOf("MIGRATION FAILED") === 0) {
+                } else if (error.message.indexOf("MIGRATION FAILED") === 0) {
                     Logger.logError("Migration Failed.", "SecureSQLiteBundle");
                     window.alert("A feature on this app failed to be upgraded. Relaunch the app to try again.");
                     navigator.app.exitApp();
