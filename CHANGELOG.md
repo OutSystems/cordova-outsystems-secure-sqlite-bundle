@@ -5,7 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Fixes - 2022-09-01
+
+## [2.0.16] - 2022-09-01
+### Fixes
 - Fix: Fixing the way we checked the migration failed error (https://outsystemsrd.atlassian.net/browse/RMET-1771)
 
 ## [2.0.15] - 2022-04-14
