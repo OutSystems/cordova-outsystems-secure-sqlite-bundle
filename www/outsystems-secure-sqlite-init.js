@@ -82,7 +82,7 @@ function acquireLsk(successCallback, errorCallback) {
                 });
             },
             function(error) {
-                if (error.message === "Authentication screen skipped"  || error.code == "OS-PLUG-KSTR-0010") {
+                if (error.message === "Authentication screen skipped" || error.code == "OS-PLUG-KSTR-0010") {
                     navigator.app.exitApp();
                 } else if (error.message === "Device is not secure") {
                     Logger.logError("Device is not secure.", "SecureSQLiteBundle");
