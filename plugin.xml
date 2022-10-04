@@ -15,7 +15,7 @@
     </js-module>
 
     <dependency id="cordova-sqlcipher-adapter" url="https://github.com/OutSystems/cordova-sqlcipher-adapter.git#0.1.7-OS7" />
-    <dependency id="cordova-plugin-secure-storage" url="https://github.com/OutSystems/cordova-plugin-secure-storage.git#feat/RMET-1843/android-set-value" />
+    <dependency id="cordova-plugin-secure-storage" url="https://github.com/OutSystems/cordova-plugin-secure-storage.git#tentative-fix-encrypted-sp" />
     
     <dependency id="outsystems-plugin-disable-backup" url="https://github.com/OutSystems/outsystems-plugin-disable-backup.git#1.0.2" />
 
