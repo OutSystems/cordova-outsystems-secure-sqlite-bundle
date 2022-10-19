@@ -76,7 +76,13 @@ function acquireLsk(successCallback, errorCallback) {
                         },
                         function (error) {
                             Logger.logError("Error while getting local storage key: " + error, "SecureSQLiteBundle");
-                            errorCallback(error);
+                            if (error.message === "Authentication screen skipped") {
+                                window.alert("Authentication required to use this app. Relaunch the app to try again.");
+                                navigator.app.exitApp();
+                            }
+                            else{
+                                errorCallback(error);
+                            }
                         }
                     );
                 });
