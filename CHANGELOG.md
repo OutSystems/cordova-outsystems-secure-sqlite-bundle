@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.1.0] - 2022-10-21
+### Features
+- Feat: Update dependency to KeyStore plugin to use its new implementation (https://outsystemsrd.atlassian.net/browse/RMET-1846)
+
 ## [2.0.16] - 2022-09-01
 ### Fixes
 - Fix: Fixing the way we checked the migration failed error (https://outsystemsrd.atlassian.net/browse/RMET-1771)
