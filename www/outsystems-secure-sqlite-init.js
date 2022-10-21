@@ -76,13 +76,19 @@ function acquireLsk(successCallback, errorCallback) {
                         },
                         function (error) {
                             Logger.logError("Error while getting local storage key: " + error, "SecureSQLiteBundle");
-                            errorCallback(error);
+                            if (error.message === "Authentication screen skipped") {
+                                window.alert("Authentication required to use this app. Relaunch the app to try again.");
+                                navigator.app.exitApp();
+                            }
+                            else{
+                                errorCallback(error);
+                            }
                         }
                     );
                 });
             },
             function(error) {
-                if (error.message === "Authentication screen skipped") {
+                if (error.message === "Authentication screen skipped" || error.code == "OS-PLUG-KSTR-0010") {
                     navigator.app.exitApp();
                 } else if (error.message === "Device is not secure") {
                     Logger.logError("Device is not secure.", "SecureSQLiteBundle");
