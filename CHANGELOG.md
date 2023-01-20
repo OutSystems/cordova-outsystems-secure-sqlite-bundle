@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.1.4] - 2023-01-20
 - Fix: [Android] Udpate secure-storage version to 2.6.8-OS17 (https://outsystemsrd.atlassian.net/browse/RMET-2190).
 
 ## [2.1.3] - 2022-12-19
