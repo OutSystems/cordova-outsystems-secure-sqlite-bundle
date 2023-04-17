@@ -1,0 +1,133 @@
+name: "Ciphered Plugin ODC Pipeline"
+
+pr: none
+trigger:
+  tags:
+    include:
+      - "*"
+
+pool:
+  vmImage: "ubuntu-20.04"
+
+resources:
+  repositories:
+    - repository: MobilePluginsE2ETests
+      type: github
+      ref: main
+      name: OutSystems/MobilePluginsE2ETests
+      endpoint: OutSystems
+    - repository: MobilePluginsODCPipeline
+      type: github
+      ref: main
+      name: OutSystems/MobilePluginsODCPipeline
+      endpoint: OutSystems
+
+stages:
+  - stage: Ciphered_E2E_Tests_Android
+    variables:
+      - group: "Saucelabs User Variables"
+    jobs:
+      - job: update_wrapper
+        displayName: "Update the plugin wrapper"
+        steps:
+          - checkout: self
+          - checkout: MobilePluginsODCPipeline
+          - template: build/ci/update-wrapper.yaml@MobilePluginsODCPipeline
+            parameters:
+              secretFileName: "eng-osrd-mobile-neo1-StampsInformation.json"
+              PLUGIN_APP_KEY: "9fe93e9c-f089-4739-8521-f69ebf737031"
+              PLUGIN_UPDATE_URL: "https://github.com/OutSystems/cordova-outsystems-secure-sqlite-bundle#$(Build.SourceBranchName)"
+              PLUGIN_UPDATE_VERSION: "$(Build.SourceBranchName)"
+              workingDirectory: $(System.DefaultWorkingDirectory)/MobilePluginsODCPipeline
+      - job: update_sampleapp
+        dependsOn: update_wrapper
+        displayName: "Refresh dependencies on the Sample App, deploy to QA and build packages"
+        steps:
+          - checkout: self
+          - checkout: MobilePluginsODCPipeline
+          - checkout: MobilePluginsE2ETests
+          - template: build/ci/refresh-sampleapp.yaml@MobilePluginsODCPipeline
+            parameters:
+              secretFileName: "eng-osrd-mobile-neo1-StampsInformation.json"
+              SAMPLEAPP_APP_KEY: "181f541f-34a1-4ee0-b148-4fe0ee227ec7"
+              workingDirectory: $(System.DefaultWorkingDirectory)/MobilePluginsODCPipeline
+          - script: |
+              echo "##vso[task.setvariable variable=apkPath]$(cat /tmp/181f541f-34a1-4ee0-b148-4fe0ee227ec7.apk-path)"
+              cat /tmp/181f541f-34a1-4ee0-b148-4fe0ee227ec7.apk-path
+              echo "##vso[task.setvariable variable=ipaPath]$(cat /tmp/181f541f-34a1-4ee0-b148-4fe0ee227ec7.ipa-path)"
+              cat /tmp/181f541f-34a1-4ee0-b148-4fe0ee227ec7.ipa-path
+            name: set_path_vars
+            displayName: "Set package variables"         
+          - task: NodeTool@0
+            displayName: "Use Node 14.15.4"
+            inputs:
+              versionSpec: "14.15.4"
+              checkLatest: true
+          - task: npmAuthenticate@0
+            displayName: "npm Authenticate .npmrc"
+            inputs:
+              workingFile: "$(System.DefaultWorkingDirectory)/MobilePluginsE2ETests/.npmrc"
+          - task: CmdLine@2
+            name: install_dep_cp2
+            displayName: "Install dependencies using yarn"
+            inputs:
+              script: "yarn"
+              workingDirectory: $(System.DefaultWorkingDirectory)/MobilePluginsE2ETests/
+            continueOnError: true
+          - script: |
+              echo "APK: $(apkPath)"
+              ls -la $(ipaPath)
+              echo "IPA: $(ipaPath)"
+              ls -la $(ipaPath)
+              node ./scripts/upload_application.js -- -f $(apkPath) -o /tmp/181f541f-34a1-4ee0-b148-4fe0ee227ec7.android-slid
+              node ./scripts/upload_application.js -- -f $(ipaPath) -o /tmp/181f541f-34a1-4ee0-b148-4fe0ee227ec7.ios-slid
+            workingDirectory: $(System.DefaultWorkingDirectory)/MobilePluginsE2ETests
+            name: upload_packages
+            displayName: "Upload package to SauceLabs"
+          - script: |
+              echo "##vso[task.setvariable variable=androidSLID;isOutput=true]$(cat /tmp/181f541f-34a1-4ee0-b148-4fe0ee227ec7.android-slid)"
+              echo "##vso[task.setvariable variable=iosSLID;isOutput=true]$(cat /tmp/181f541f-34a1-4ee0-b148-4fe0ee227ec7.ios-slid)"
+            name: set_slid_vars
+            displayName: "Set SauceLabs Storage IDs variables"
+      - job: android_e2e_tests
+        dependsOn: update_sampleapp
+        displayName: "Android E2E tests"
+        variables:
+          - name: storageID
+            value: $[ dependencies.update_sampleapp.outputs['set_slid_vars.androidSLID'] ]        
+        steps:
+          - checkout: self
+          - checkout: MobilePluginsE2ETests
+          - template: build/ci/templates/run-tests.yaml@MobilePluginsE2ETests
+            parameters:
+              DATACENTER: eu
+              DEVICE_PLATFORM: Android
+              DEVICE_VERSION: 12
+              PLATFORM_TYPE: Mobile
+              PLUGIN: Ciphered
+              RETRY: 1
+              TEST_TYPE: native
+              THREADS: 3
+              STORAGE_ID: $(storageID)
+              WORKING_DIR: $(System.DefaultWorkingDirectory)/MobilePluginsE2ETests
+      - job: iOS_e2e_tests
+        dependsOn: update_sampleapp
+        displayName: "iOS E2E tests"
+        variables:
+          - name: storageID
+            value: $[ dependencies.update_sampleapp.outputs['set_slid_vars.iosSLID'] ]
+        steps:
+          - checkout: self
+          - checkout: MobilePluginsE2ETests
+          - template: build/ci/templates/run-tests.yaml@MobilePluginsE2ETests
+            parameters:
+              DATACENTER: eu
+              DEVICE_PLATFORM: iOS
+              DEVICE_VERSION: 16
+              PLATFORM_TYPE: Mobile
+              PLUGIN: Ciphered
+              RETRY: 1
+              TEST_TYPE: native
+              THREADS: 3
+              STORAGE_ID: $(storageID)
+              WORKING_DIR: $(System.DefaultWorkingDirectory)/MobilePluginsE2ETests
