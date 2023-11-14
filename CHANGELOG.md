@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.1.5] - 2023-11-13
+- Fix: [Android/iOS] Update sqlcipher to 4.5.4 and sqlite 3.40.1 (https://outsystemsrd.atlassian.net/browse/RMET-2843).
+
 ## [2.1.4] - 2023-01-20
 - Fix: [Android] Udpate secure-storage version to 2.6.8-OS17 (https://outsystemsrd.atlassian.net/browse/RMET-2190).
 
