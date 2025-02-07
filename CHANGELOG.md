@@ -4,7 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.1.7] - 2025-02-07
+- Chore: Update dependency to KeyStore plugin to use version `2.6.8-OS21`.
 
 ## [2.1.6] - 2024-11-14
 - Fix: [Android] Update sqlcipher to 4.6.1 and sqlite 3.46.1 (https://outsystemsrd.atlassian.net/browse/RMET-3602).
