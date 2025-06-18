@@ -28,6 +28,9 @@
       "version": ">=3.3.0"
     }
   ],
+  "scripts": {
+    "capacitor:update:after": "node build-actions/update_strings_for_keystore.js"
+  },
   "author": "OutSystems",
   "license": "MIT",
   "bugs": {
