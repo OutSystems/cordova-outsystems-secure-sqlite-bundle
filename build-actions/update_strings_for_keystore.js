@@ -13,6 +13,8 @@ if (platform != 'android') {
 
 console.log("\nCiphered Local Storage Plugin - running hook after update - for " + platform);
 
+deleteDrawables();
+
 const stringsXmlPath = path.join(projectRoot, 'android/app/src/main/res/values/strings.xml');
 const jsonConfigPath = path.join(projectRoot, "outsystems.config.json");
 if (!fs.existsSync(stringsXmlPath)) {
@@ -88,4 +90,21 @@ function getConfigValue(config, key) {
         return undefined;
     }
     return config.buildConfigurations.buildActions[0].parameters[key];
+}
+
+function deleteDrawables() {
+    const drawablesDirPath = path.resolve(projectRoot, 'android/app/src/main/res');
+
+    fs.rm(path.resolve(drawablesDirPath, 'drawable-land-hdpi'), { recursive: true, force: true }, (err) => {});
+    fs.rm(path.resolve(drawablesDirPath, 'drawable-land-ldpi'), { recursive: true, force: true }, (err) => {});
+    fs.rm(path.resolve(drawablesDirPath, 'drawable-land-mdpi'), { recursive: true, force: true }, (err) => {});
+    fs.rm(path.resolve(drawablesDirPath, 'drawable-land-xhdpi'), { recursive: true, force: true }, (err) => {});
+    fs.rm(path.resolve(drawablesDirPath, 'drawable-land-xxhdpi'), { recursive: true, force: true }, (err) => {});
+    fs.rm(path.resolve(drawablesDirPath, 'drawable-land-xxxhdpi'), { recursive: true, force: true }, (err) => {});
+    fs.rm(path.resolve(drawablesDirPath, 'drawable-port-hdpi'), { recursive: true, force: true }, (err) => {});
+    fs.rm(path.resolve(drawablesDirPath, 'drawable-port-ldpi'), { recursive: true, force: true }, (err) => {});
+    fs.rm(path.resolve(drawablesDirPath, 'drawable-port-mdpi'), { recursive: true, force: true }, (err) => {});
+    fs.rm(path.resolve(drawablesDirPath, 'drawable-port-xhdpi'), { recursive: true, force: true }, (err) => {});
+    fs.rm(path.resolve(drawablesDirPath, 'drawable-port-xxhdpi'), { recursive: true, force: true }, (err) => {});
+    fs.rm(path.resolve(drawablesDirPath, 'drawable-port-xxxhdpi'), { recursive: true, force: true }, (err) => {});
 }
