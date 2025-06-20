@@ -14,7 +14,7 @@ if (platform != 'android') {
 console.log("\nCiphered Local Storage Plugin - running hook after update - for " + platform);
 
 const stringsXmlPath = path.join(projectRoot, 'android/app/src/main/res/values/strings.xml');
-const jsonConfigPath = path.join(projectRoot, "capacitor.config.json");
+const jsonConfigPath = path.join(projectRoot, "outsystems.config.json");
 if (!fs.existsSync(stringsXmlPath)) {
    console.error("\t[ERROR] - strings.xml file does not exist, and is required by this hook - " + stringsXmlPath);
    process.exit(1);
@@ -82,10 +82,10 @@ function elementExistsInCapacitorConfig(configKey) {
 }
 
 function getConfigValue(config, key) {
-    if (!config || !config.outsystems || !config.outsystems.buildConfigurations || 
-        !config.outsystems.buildConfigurations.buildActions || !config.outsystems.buildConfigurations.buildActions[0] ||
-        !config.outsystems.buildConfigurations.buildActions[0].parameters) {
+    if (!config || !config.buildConfigurations || 
+        !config.buildConfigurations.buildActions || !config.buildConfigurations.buildActions[0] ||
+        !config.buildConfigurations.buildActions[0].parameters) {
         return undefined;
     }
-    return config.outsystems.buildConfigurations.buildActions[0].parameters[key];
+    return config.buildConfigurations.buildActions[0].parameters[key];
 }
