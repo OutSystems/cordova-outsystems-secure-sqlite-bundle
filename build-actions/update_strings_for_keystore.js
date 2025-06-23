@@ -11,7 +11,7 @@ if (platform != 'android') {
     return
 }
 
-console.log("\nCiphered Local Storage Plugin - running hook after update - for " + platform);
+console.log("\nCiphered Local Storage Plugin - running hook before update - for " + platform);
 
 const stringsXmlPath = path.join(projectRoot, 'android/app/src/main/res/values/strings.xml');
 if (!fs.existsSync(stringsXmlPath)) {
