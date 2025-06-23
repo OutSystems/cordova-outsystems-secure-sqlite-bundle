@@ -14,30 +14,24 @@ if (platform != 'android') {
 console.log("\nCiphered Local Storage Plugin - running hook after update - for " + platform);
 
 const stringsXmlPath = path.join(projectRoot, 'android/app/src/main/res/values/strings.xml');
-const jsonConfigPath = path.join(projectRoot, "outsystems.config.json");
 if (!fs.existsSync(stringsXmlPath)) {
    console.error("\t[ERROR] - strings.xml file does not exist, and is required by this hook - " + stringsXmlPath);
-   process.exit(1);
-}
-if (!fs.existsSync(jsonConfigPath)) {
-   console.error("\t[ERROR] - capacitor.config.json file does not exist, and is required by this hook - " + jsonConfigPath);
    process.exit(1);
 }
 
 // read and parse files
 const stringsXmlDoc = parser.parseFromString(fs.readFileSync(stringsXmlPath, 'utf-8'), 'text/xml');
-const configJsonContent = JSON.parse(fs.readFileSync(jsonConfigPath, "utf8"));
 let writtenValuesCount = 0;
 
 // Add  entries only if they are not present
 const valuesToAdd = [
-    { stringsXmlName: 'migration_auth', value: 'false', type: 'bool', configKey: 'MIGRATE_KEYS_AUTH' },
-    { stringsXmlName: 'biometric_prompt_title', value: 'Authentication required', type: 'string', configKey: 'BIOMETRIC_PROMPT_TITLE' },
-    { stringsXmlName: 'biometric_prompt_subtitle', value: 'Please authenticate to continue', type: 'string', configKey: 'BIOMETRIC_PROMPT_SUBTITLE'  },
-    { stringsXmlName: 'biometric_prompt_negative_button', value: 'Cancel', type: 'string', configKey: 'BIOMETRIC_PROMPT_NEGATIVE_BTN'  }
+    { stringsXmlName: 'migration_auth', value: 'false', type: 'bool' },
+    { stringsXmlName: 'biometric_prompt_title', value: 'Authentication required', type: 'string' },
+    { stringsXmlName: 'biometric_prompt_subtitle', value: 'Please authenticate to continue', type: 'string'  },
+    { stringsXmlName: 'biometric_prompt_negative_button', value: 'Cancel', type: 'string'  }
 ];
-for (const { stringsXmlName, value, type, configKey } of valuesToAdd) {
-    if (!elementExists(type, stringsXmlName, configKey)) {
+for (const { stringsXmlName, value, type } of valuesToAdd) {
+    if (!elementExistsInStringsXml(type, stringsXmlName)) {
         const stringElement = stringsXmlDoc.createElement(type);
         stringElement.setAttribute('name', stringsXmlName);
         stringElement.textContent = value;
@@ -61,10 +55,6 @@ if (writtenValuesCount > 0) {
     console.log("\t[SKIPPED] Values already exist in strings.xml");
 }
 
-function elementExists(tagName, nameValue, configKey) {
-    return elementExistsInStringsXml(tagName, nameValue) || elementExistsInCapacitorConfig(configKey);
-}
-
 function elementExistsInStringsXml(tagName, nameValue) {
     const elements = stringsXmlDoc.getElementsByTagName(tagName);
     for (let i = 0; i < elements.length; i++) {
@@ -73,19 +63,4 @@ function elementExistsInStringsXml(tagName, nameValue) {
         }
     }
     return false;
-}
-
-function elementExistsInCapacitorConfig(configKey) {
-    // Such elements in capacitor config should be written into strings.xml later
-    // through a different build actions file (KeyStore plugin)
-    return getConfigValue(configJsonContent, configKey) != undefined;
-}
-
-function getConfigValue(config, key) {
-    if (!config || !config.buildConfigurations || 
-        !config.buildConfigurations.buildActions || !config.buildConfigurations.buildActions[0] ||
-        !config.buildConfigurations.buildActions[0].parameters) {
-        return undefined;
-    }
-    return config.buildConfigurations.buildActions[0].parameters[key];
 }
