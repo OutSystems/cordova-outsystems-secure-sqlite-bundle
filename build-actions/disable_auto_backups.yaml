@@ -1,0 +1,7 @@
+platforms:
+  android:
+    manifest:
+      - file: AndroidManifest.xml
+        target: manifest/application
+        attrs:
+          android:allowBackup: "false"
