@@ -19,6 +19,8 @@
     
     <dependency id="outsystems-plugin-disable-backup" url="https://github.com/OutSystems/outsystems-plugin-disable-backup.git#1.0.2" />
 
+    <dependency id="@outsystems/cordova-outsystems-logger" />
+
     <engines>
         <engine name="cordova" version=">=6.4.0"/>
         <engine name="cordova-android" version=">=6.0.0"/>
