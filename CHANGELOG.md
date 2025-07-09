@@ -12,7 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Chore: Update dependency to KeyStore plugin to use version `2.6.8-OS22`.
 
 ## [2.1.7] - 2025-02-07
-- Chore: Update dependency to KeyStore plugin to use version `2.6.8-OS21`.
+- Chore: [iOS] Update dependency to KeyStore plugin to use version `2.6.8-OS21` (https://outsystemsrd.atlassian.net/browse/RMET-4037).
+- Fix: [iOS] Update SQLite to 3.46.1 (https://outsystemsrd.atlassian.net/browse/RMET-3850).
 
 ## [2.1.6] - 2024-11-14
 - Fix: [Android] Update sqlcipher to 4.6.1 and sqlite 3.46.1 (https://outsystemsrd.atlassian.net/browse/RMET-3602).
