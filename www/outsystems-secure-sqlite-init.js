@@ -1,4 +1,3 @@
-cordova.define("com.outsystems.plugins.SecureSQLiteBundle.OutSystemsSecureSQLiteBundle", function(require, exports, module) { 
 // Force dependency load
 var SQLiteCipher = require('cordova-sqlcipher-adapter.SQLitePlugin');
 var SecureStorage = require('cordova-plugin-secure-storage.SecureStorage');
@@ -211,4 +210,3 @@ window.sqlitePlugin.openDatabase = function(options, successCallback, errorCallb
         },
         errorCallback);
 };
-});
