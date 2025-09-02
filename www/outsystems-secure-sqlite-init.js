@@ -2,10 +2,6 @@
 var SQLiteCipher = require('cordova-sqlcipher-adapter.SQLitePlugin');
 var SecureStorage = require('cordova-plugin-secure-storage.SecureStorage');
 
-var Logger = !!OutSystemsNative ? OutSystemsNative.Logger : undefined;
-if (typeof(Logger) === "undefined") {
-    throw new Error("Dependencies were not loaded correctly: OutSystemsNative.Logger is not defined.");
-}
 // Validate SQLite plugin API is properly set
 if (typeof(window.sqlitePlugin) === "undefined") {
     throw new Error("Dependencies were not loaded correctly: window.sqlitePlugin is not defined.");
@@ -51,7 +47,7 @@ function acquireLsk(successCallback, errorCallback) {
                                         successCallback(lskCache);
                                     },
                                     function (error) {
-                                        Logger.logError("Error getting local storage key from keychain: " + error, "SecureSQLiteBundle");
+                                        console.log("SecureSQLiteBundle: Error getting local storage key from keychain: " + error);
                                         errorCallback(error);
                                     },
                                     LOCAL_STORAGE_KEY);
@@ -62,12 +58,12 @@ function acquireLsk(successCallback, errorCallback) {
                                 lskCache = undefined;
                                 ss.set(
                                     function (key) {
-                                        Logger.logWarning("Setting new local storage key.", "SecureSQLiteBundle");
+                                        console.log("SecureSQLiteBundle: Setting new local storage key.");
                                         lskCache = newKey;
                                         successCallback(lskCache);
                                     },
                                     function (error) {
-                                        Logger.logError("Error generating new local storage key: " + error, "SecureSQLiteBundle");
+                                        console.log("SecureSQLiteBundle: Error generating new local storage key: " + error);
                                         errorCallback(error);
                                     },
                                     LOCAL_STORAGE_KEY,
@@ -75,7 +71,7 @@ function acquireLsk(successCallback, errorCallback) {
                             }
                         },
                         function (error) {
-                            Logger.logError("Error while getting local storage key: " + error, "SecureSQLiteBundle");
+                            console.log("SecureSQLiteBundle: Error while getting local storage key: " + error);
                             if (error.message === "Authentication screen skipped") {
                                 window.alert("Authentication required to use this app. Relaunch the app to try again.");
                                 navigator.app.exitApp();
@@ -91,7 +87,7 @@ function acquireLsk(successCallback, errorCallback) {
                 if (error.message === "Authentication screen skipped" || error.code == "OS-PLUG-KSTR-0010") {
                     navigator.app.exitApp();
                 } else if (error.message === "Device is not secure") {
-                    Logger.logError("Device is not secure.", "SecureSQLiteBundle");
+                    console.log("SecureSQLiteBundle: Device is not secure.");
                     if (window.confirm("In order to use this app, your device must have a secure lock screen. Press OK to setup your device.")) {
                         ss.secureDevice(
                             initFn,
@@ -104,7 +100,7 @@ function acquireLsk(successCallback, errorCallback) {
                     }
                 // When secure storage key migration fails
                 } else if (error.message.indexOf("MIGRATION FAILED") === 0) {
-                    Logger.logError("Migration Failed.", "SecureSQLiteBundle");
+                    console.log("SecureSQLiteBundle: Migration failed.");
                     window.alert("A feature on this app failed to be upgraded. Relaunch the app to try again.");
                     navigator.app.exitApp();
                 // Otherwise

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.2.2] - 2025-09-02
+- Fix: Update dependency to cordova-sqlcipher-adapter plugin to use version `0.1.7-OS10` (https://outsystemsrd.atlassian.net/browse/RMET-4297).
+- Fix: Remove dependencies to OSLogger (https://outsystemsrd.atlassian.net/browse/RMET-4297).
+
 ## [2.2.1] - 2025-07-08
 - Chore: Update dependency to KeyStore plugin to use version `2.6.8-OS23`.
 
