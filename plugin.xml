@@ -16,7 +16,7 @@
 
     <!-- iOS: placeholder source file so Capacitor creates the SPM sources directory -->
     <platform name="ios" package="swift">
-        <source-file src="src/ios/SecureSQLiteBundle.swift" />
+        <source-file src="src/ios/SecureSQLiteBundle.swift" nospm="true" />
     </platform>
 
     <dependency id="cordova-sqlcipher-adapter" url="https://github.com/OutSystems/cordova-sqlcipher-adapter.git#0.1.7-OS11" />
