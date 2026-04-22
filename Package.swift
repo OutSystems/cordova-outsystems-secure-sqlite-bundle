@@ -3,11 +3,11 @@ import PackageDescription
 
 let package = Package(
     name: "com.outsystems.plugins.SecureSQLiteBundle",
-    platforms: [.iOS(.v14)],
+    platforms: [.iOS(.v15)],
     products: [
         .library(
             name: "com.outsystems.plugins.SecureSQLiteBundle",
-            targets: ["com.outsystems.plugins.SecureSQLiteBundle"])
+            targets: ["SecureSQLiteBundlePlugin"])
     ],
     dependencies: [
         .package(url: "https://github.com/apache/cordova-ios.git", branch: "master"),
@@ -16,7 +16,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "com.outsystems.plugins.SecureSQLiteBundle",
+            name: "SecureSQLiteBundlePlugin",
             dependencies: [
                 .product(name: "Cordova", package: "cordova-ios"),
                 .product(name: "cordova-plugin-secure-storage", package: "cordova-plugin-secure-storage"),
