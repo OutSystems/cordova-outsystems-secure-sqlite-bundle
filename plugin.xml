@@ -15,7 +15,7 @@
     </js-module>
 
     <!-- iOS: placeholder source file so Capacitor creates the SPM sources directory -->
-    <platform name="ios">
+    <platform name="ios" package="swift">
         <source-file src="src/ios/SecureSQLiteBundle.swift" />
     </platform>
 
