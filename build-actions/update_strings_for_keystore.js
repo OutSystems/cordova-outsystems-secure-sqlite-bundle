@@ -1,8 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const { DOMParser, XMLSerializer } = require('xmldom');
 
-const parser = new DOMParser();
 const platform = process.env.CAPACITOR_PLATFORM_NAME;
 const projectRoot = process.env.CAPACITOR_ROOT_DIR;
 
@@ -10,6 +8,9 @@ if (platform != 'android') {
     // hook only needs to run for Android
     return
 }
+
+const { DOMParser, XMLSerializer } = require('xmldom');
+const parser = new DOMParser();
 
 console.log("\nCiphered Local Storage Plugin - running hook before update - for " + platform);
 
