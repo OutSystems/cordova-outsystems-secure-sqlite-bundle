@@ -19,8 +19,8 @@
         <source-file src="src/ios/SecureSQLiteBundle.swift" nospm="true" />
     </platform>
 
-    <dependency id="cordova-sqlcipher-adapter" url="https://github.com/OutSystems/cordova-sqlcipher-adapter.git#0.1.7-OS11" />
-    <dependency id="cordova-plugin-secure-storage" url="https://github.com/OutSystems/cordova-plugin-secure-storage.git#2.6.8-OS29" />
+    <dependency id="cordova-sqlcipher-adapter" url="https://github.com/OutSystems/Cordova-sqlcipher-adapter.git#feat/RMET-5136/spm" />
+    <dependency id="cordova-plugin-secure-storage" url="https://github.com/OutSystems/cordova-plugin-secure-storage.git#feat/RMET-5136/spm" />
     
     <dependency id="outsystems-plugin-disable-backup" url="https://github.com/OutSystems/outsystems-plugin-disable-backup.git#1.0.2" />
 
