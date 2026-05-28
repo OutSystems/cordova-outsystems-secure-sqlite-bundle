@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.2.8] - 2026-05-28
+- Chore: Update dependency to cordova-plugin-secure-storage plugin to use version `2.6.8-OS30` (https://outsystemsrd.atlassian.net/browse/RMET-5188)
+
 ## [2.2.7] - 2026-03-09
 - Fix: Update dependency to cordova-sqlcipher-adapter plugin to use version `0.1.7-OS11` (https://outsystemsrd.atlassian.net/browse/RMET-4293).
 - Fix [iOS]: Update dependency to cordova-plugin-secure-storage plugin to use version `2.6.8-OS29` (https://outsystemsrd.atlassian.net/browse/RMET-5030).
