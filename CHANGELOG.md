@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.3.0]
+
+### Features
+
+- feat: update to SQLCipher 4.18.0 and SQLite 3.53.4 (#52)
+
 ## [2.2.8] - 2026-05-28
 - Chore: Update dependency to cordova-plugin-secure-storage plugin to use version `2.6.8-OS30` (https://outsystemsrd.atlassian.net/browse/RMET-5188)
 
