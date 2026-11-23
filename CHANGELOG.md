@@ -4,11 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [2.3.2]
+## [2.3.3]
 
 ### Chores
 
 - chore(koda): initialize Koda (#48)
+
+## [2.3.2]
+
+### Fixes
+
+- fix(android): MABS 11 and MABS 12 builds (#54)
 
 ## [2.3.1]
 
